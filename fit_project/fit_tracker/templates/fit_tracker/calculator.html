@@ -1,0 +1,84 @@
+{% extends 'fit_tracker/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/dashboard.css' %}">
+
+<div  class="container-fluid topdiv">
+<br>
+  <div style = "width:65%;" class="card">
+    <h5 class="card-header">Calculate One Rep Max and Percentages</h5>
+    <div class="card-body">
+      <form action="" method="post" class="form-group">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" name="save" class= "btn btn-primary">Calculate 1RM</button>
+
+      </form>
+    </div>
+  </div>
+
+<br>
+
+<p>{{ context }}</p>
+</div>
+
+{% if max %}
+
+<div class="container-fluid">
+
+
+<table style="width:65%; text-align:center;" class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Percentage</th>
+      <th scope="col">Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">95%</th>
+      <td>{% widthratio  0.95 1 max %}</td>
+    </tr>
+    <tr>
+      <th scope="row">90%</th>
+      <td>{% widthratio  0.90 1 max %}</td>
+    </tr>
+    <tr>
+      <th scope="row">85%</th>
+      <td>{% widthratio  0.85 1 max %}</td>
+    </tr>
+    <tr>
+      <th scope="row">80%</th>
+      <td>{% widthratio  0.80 1 max %}</td>
+    </tr>
+    <tr>
+      <th scope="row">75%</th>
+      <td>{% widthratio  0.75 1 max %}</td>
+    </tr>
+    <tr>
+      <th scope="row">70%</th>
+      <td>{% widthratio  0.70 1 max %}</td>
+    </tr>
+    <tr>
+      <th scope="row">65%</th>
+      <td>{% widthratio  0.65 1 max %}</td>
+    </tr>
+    <tr>
+      <th scope="row">60%</th>
+      <td>{% widthratio  0.60 1 max %}</td>
+    </tr>
+    <tr>
+      <th scope="row">55%</th>
+      <td>{% widthratio  0.55 1 max %}</td>
+    </tr>
+    <tr>
+      <th scope="row">50%</th>
+      <td>{% widthratio  0.50 1 max %}</td>
+    </tr>
+
+  </tbody>
+</table>
+
+</div>
+{% endif %}
+{% endblock %}

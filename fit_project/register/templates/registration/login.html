@@ -1,0 +1,63 @@
+{% extends "fit_tracker/base.html" %}
+{% load static %}
+{% block title %} login {%  endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/register.css' %}">
+
+<form class="form-group" method="POST" action="{% url 'login' %}">
+  {% csrf_token %}
+  <div class="container" id= "loginForm">
+
+      <div class="row">
+          <div class="col-md-6 mx-auto p-0">
+              <div class="card">
+                  <div class="login-box">
+                    {% if signup %}
+                      <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" ><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"  checked><label for="tab-2" class="tab">Sign Up</label>
+                    {% else %}
+                      <div class="login-snip"> <input id="tab-1" type="radio" name="tab" class="sign-in" checked ><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                    {% endif %}
+                          <div class="login-space">
+                              <div class="login">
+                                  <div class="group"> <label for="user" class="label">Username</label> <input id="user" type="text" class="input" placeholder="Enter your username" name="loginUsername" required=""> </div>
+                                  <div class="group"> <label for="pass" class="label">Password</label> <input id="pass" type="password" class="input" data-type="password" placeholder="Enter your password" name="password" required=""> </div>
+
+                                  <div class="group"> <input id="check" type="checkbox" class="check" checked> <label for="check"><span class="icon"></span> Keep me Signed in</label> </div>
+                                  <div class="group"> <input type="submit" class="button" name="Sign-in" value="Sign In"> </div>
+                                  <p style="color:red;">{{context}}</p>
+                                  <div class="foot"> <a href="{% url 'password_reset' %}" >Forgot Password?</a> </div>
+                              </div>
+                              <div class="sign-up-form">
+                                {% for field in form %}
+
+                                {% if field.name == 'username' %}
+                                  <div class="group"> <label for="newUser" class="label">{{ field.label }}</label> <input  id="newUser" type="text" class="input" name="{{ field.name }}" placeholder="Create your Username" required=""> </div>
+                                {%  endif %}
+                                {% if field.name == 'email' %}
+                                  <div class="group"> <label for="email" class="label">{{ field.label }}</label> <input id="email" type="text" class="input" name= "{{ field.name }}" placeholder="Enter your email address" required=""> </div>
+                                {%  endif %}
+                                {% if field.name == 'password1' %}
+                                  <div class="group"> <label for="pass1" class="label">{{ field.label }}</label> <input id="pass1" type="password" class="input" name="{{ field.name }}" data-type="password" placeholder="Create your password" required=""> </div>
+                                {%  endif %}
+                                {% if field.name == 'password2' %}
+                                  <div class="group"> <label for="pass2" class="label">{{ field.label }}</label> <input id="pass2" type="password" class="input" name="{{ field.name }}" data-type="password" placeholder="Repeat your password" required=""> </div>
+                                 {%  endif %}
+                                  {%  endfor %}
+
+                                  <div class="group"> <input type="submit" class="button" name="Sign-up" value="Sign Up"> </div>
+                                  <p style="color:red;">{{ err }}</p>
+                                  <div class="foot"> <label for="tab-1"><a></a> </label> </div>
+
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</form>
+{% endblock %}

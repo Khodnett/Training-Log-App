@@ -1,0 +1,15 @@
+{% extends "fit_tracker/base.html" %}
+{% block title %} Create an Account{%  endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<form class="form-group" method="POST">
+  {% csrf_token %}
+ {% for field in form %}
+
+
+   <div class="group"> <label for="newUser" class="label">{{ field.label }}</label> <input  id="newUser" type="text" class="input" name="{{ field.name  }}" placeholder="Create your Username" required=""> </div>
+
+  {% endfor %}
+  <button type="submit" class="btn btn-success">Register</button>
+</form>
+{% endblock %}

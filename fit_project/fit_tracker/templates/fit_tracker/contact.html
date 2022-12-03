@@ -1,0 +1,22 @@
+{% extends 'fit_tracker/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% if user.is_authenticated %}
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/dashboard.css' %}">
+{% endif %}
+<div class="container-fluid topdiv">
+    <div class="container">
+		<h3 >Contact Us</h3
+      <br><br>
+		<form class="form-group" method="POST">
+
+        {% csrf_token %}
+        {{form | crispy}}
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'fit_tracker/base.html' %}
+{% load static %}
+{% block content %}
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/dashboard.css' %}">
+
+<div class="container-fluid">
+  <div class="row topdiv">
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-12 pt-3 px-4">
+      <div class="card formcard">
+        <div class="card-header">
+
+      <div  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+        <h4 class="h5"></h4>
+        <h4 class="h5 text-center">{{ month }} {{ year }}</h4>
+
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group mr-2">
+            <a  name ="prev" href="{% url 'calendar' prevYear prevMonth %}" class="btn btn-sm btn-outline-secondary"><i class="fas fa-angle-left"></i></a>
+            <a  name ="next" href="{% url 'calendar' nextYear nextMonth %}" class="btn btn-sm btn-outline-secondary"><i class="fas fa-angle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="card-body">
+      <header>
+                        <div class="row d-none d-sm-flex p-1 bg-dark text-white">
+                        <h5 class="col-sm p-1 text-center">Monday</h5>
+                        <h5 class="col-sm p-1 text-center">Tuesday</h5>
+                        <h5 class="col-sm p-1 text-center">Wednesday</h5>
+                        <h5 class="col-sm p-1 text-center">Thursday</h5>
+                        <h5 class="col-sm p-1 text-center">Friday</h5>
+                        <h5 class="col-sm p-1 text-center">Saturday</h5>
+                        <h5 class="col-sm p-1 text-center">Sunday</h5>
+                      </div>
+    </header>
+    <div class="row border border-right-0">
+
+    {{ cal | safe }}
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+  $(document.body).append('<br><br>');
+
+</script>
+
+{%  endblock %}

@@ -1,0 +1,152 @@
+{% extends 'fit_tracker/base.html' %}
+{% load static %}
+{% block content %}
+
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="{% static 'CSS/dashboard.css' %}">
+
+
+
+
+{% for wkout in ls.workoutname.all %}
+<div style="height: 220px;" class="container-fluid topdiv">
+
+    <div class="card formcard">
+      <h5 class="card-header" name = "{{ wkout.name }}" > {{ wkout.name }}<span style="float:right;">{{ls.date}}</span></h5>
+      <div class="card-body">
+        <form  action="" method="post" class="form-group">
+          {% csrf_token %}
+          {{form}}
+          <button type="submit" name="save" class= "btn btn-success">Add Set</button>
+
+        </form>
+    <p style="color: red;">{{ context }}</p>
+      </div>
+    </div>
+
+
+
+
+<div class="border-top my-3 bg-light"></div>
+</div>
+{% endfor %}
+
+<div class="container-fluid">
+
+
+{% for wkout in ls.workoutname.all %}
+<br><br>
+<div class="card">
+  <h5 class="card-header">Workout</h5>
+  <div class="card-body">
+
+
+  {% for e in wkout.exercise.all %}
+  <div id="tablesDiv" >
+   <div style="height: 40px;" class="card-header border">
+
+
+  <a id="colBtn{{ forloop.counter }}{{ ls }}" class="CollapseTable" data-toggle="collapse" href="#wTable{{ forloop.counter }}{{ ls }}" role="button" aria-expanded="true" aria-controls="wTable{{ forloop.counter }}{{ ls }}"></a>
+  <h6><b><u>{{ e.name }}</u></b></h6>
+  </div>
+  <div class = "collapse" id="wTable{{ forloop.counter }}{{ ls }}" >
+  <table class="table table-sm table-hover">
+
+    <thead>
+      <tr class="text-center">
+        <th scope="col sm-3">Set</th>
+        <th scope="col sm-3">Weight</th>
+        <th scope="col sm-3">Reps</th>
+        <th scope="col sm-3"></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for es in e.exerciseset.all %}
+      <tr class="text-center">
+        <th scope="row">{{ forloop.counter }} </th>
+        <td>{% if es.weight == 0 %} bodyweight {% else %} {{ es.weight }} {{ es.metric }}s {% endif %}</td>
+        <td>x{{ es.reps }}</td>
+        <td><a name= "{{ es.id }}" href="{% url 'delete_set' es.id  %}"><i class="far fa-times-circle" style="color:grey;"></i></a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+  </div>
+  </div>
+  {% endfor %}
+
+
+  <br><br>
+
+  {% for wkout in ls.workoutname.all %}
+    {% for note in wkout.notes.all %}
+      <div class="note bg-white">
+
+
+      <p><b>Notes: </b></p>
+      <div class="border-top my-3 bg-light"></div>
+      <p>{{ note | safe }}</p>
+       </div>
+
+      <form id="editform"  action="" method="post" class="form-group" style="display: none;">
+        {% csrf_token %}
+         {{ noteform.media }}
+        {{noteform.as_p}}
+              <button type="submit" name="save" class= "btn btn-primary">Save</button>
+              <a  id="cancelNote" class= "btn btn-secondary text-white">Cancel</a>
+      </form>
+
+      <div class="note">
+      <small><a id="editNote" href="javascript:void();">Edit</a> | <a  data-toggle="modal" data-target="#ModalCenter" href="#">Delete</a></small>
+      </div>
+      <div class="modal fade" id='ModalCenter' tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="ModalLTitle">Delete Note</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body text-wrap">
+                              Are you sure you want to delete notes?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <a href="{% url 'delete_note' note.id  %}" type="button" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+          </div>
+
+
+      {% empty %}
+
+      <form action="" method="post" class="form-group">
+        {% csrf_token %}
+         {{ noteform.media }}
+        {{noteform.as_p}}
+        <button type="submit" name="save" class= "btn btn-primary">Submit</button>
+      </form>
+
+
+    {% endfor %}
+  {% endfor %}
+
+   </div>
+  </div>
+{% endfor %}
+<br><br>
+
+</div>
+
+<script src="{% static 'js/dash.js' %}" ></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+
+
+{% endblock %}
