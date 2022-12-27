@@ -14,7 +14,7 @@ import os
 import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEMPLATE_DIR = os.path.join(BASE_DIR,'fit_tracker/templates/fit_tracker')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'fit_tracker/templates/fit_tracker')
 #STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 # Quick-start development settings - unsuitable for production
@@ -138,7 +138,7 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media')
 CKEDITOR_CONFIGS = {
     "default": {
         "removePlugins": "stylesheetparser",
-        "allowedContent":True,
+        "allowedContent": True,
         "width": "130%",
         "height": "50%",
     }
@@ -160,4 +160,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = 'supemxblvdkeugzt'
+EMAIL_HOST_PASSWORD = 'dceujzmsjgvyymey'

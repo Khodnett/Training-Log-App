@@ -19,36 +19,36 @@
 
 
 <div class="topdiv">
-<div class="container-fluid">
-  <div class="card formcard">
-    <h5 class="card-header">Log Workout</h5>
-    <div class="card-body">
-      <form action="" method="post" class="form-inline">
-        {% csrf_token %}
-        {% for field in form %}
-        {% if field.name == 'name' %}
+  <div class="container-fluid">
+    <div class="card formcard">
+      <h5 class="card-header">Log Workout</h5>
+      <div class="card-body">
+        <form action="" method="post" class="form-inline">
+          {% csrf_token %}
+          {% for field in form %}
+          {% if field.name == 'name' %}
           <label for="wodate">Title:</label>
-            <input id="wotitle" type="text" name="{{ field.name }}" class="form-control mr-3"  style="width:35%;" required>
-
-        {% endif %}
-          {% if field.name == 'date' %}
-            <label for="datepicker"> Date: </label>
-              <input autocomplete="off"  name="{{ field.name }}" class="form-control" id="datepicker" width="200" required  />
+          <input id="wotitle" type="text" name="{{ field.name }}" class="form-control mr-3" style="width:35%;" required>
 
           {% endif %}
-        {% endfor %}
+          {% if field.name == 'date' %}
+          <label for="datepicker"> Date: </label>
+          <input autocomplete="off" name="{{ field.name }}" class="form-control" id="datepicker" width="200" required />
 
-        <button type="submit" name="save" class= "btn btn-success ml-3">Submit</button>
+          {% endif %}
+          {% endfor %}
 
-      </form>
-  <p style="color: red;">{{ context }}</p>
+          <button type="submit" name="save" class="btn btn-success ml-3">Submit</button>
+
+        </form>
+        <p style="color: red;">{{ context }}</p>
+      </div>
     </div>
+
+
   </div>
-
-
-</div>
-<div class="border-top my-3"></div>
-<div class="container-fluid">
+  <div class="border-top my-3"></div>
+  <div class="container-fluid">
 
   </div>
 
@@ -61,55 +61,59 @@
     <div class="card-body">
 
       <table id="example" class="table table-sm table-hover table-bordered dt-responsive nowrap" width="100%">
-          <thead class="thead-dark">
-              <tr>
-                  <th style="width:50%;" class="text-center">Date</th>
-                  <th class="text-center">Title</th>
-              </tr>
-          </thead>
-          <tbody>
+        <thead class="thead-dark">
+          <tr>
+            <th style="width:50%;" class="text-center">Date</th>
+            <th class="text-center">Title</th>
+          </tr>
+        </thead>
+        <tbody>
 
-                {% for td in user.workoutdate.all %}
-                   <tr>
-                     <td id="myTd" class="text-center"><a href="/{{td.id}}"><span>{{td.date |date:'Ymd' }}</span>{{td.date |date:'m/d/Y' }}</a></td>
-                     {% for nm in td.workoutname.all %}
-                      <td id="myTd" class="text-center"><a href="/{{td.id}}">{{ nm }}</a><a data-toggle="modal" data-target="#d{{td}}ModalCenter" style="float:right;" name= "" href="#"><i class="far fa-times-circle" style="color:grey;"></i></a></td>
-                      <div class="modal fade" id='d{{td}}ModalCenter' tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          {% for td in user.workoutdate.all %}
+          <tr>
+            <td id="myTd" class="text-center"><a href="/{{td.id}}"><span>{{td.date |date:'Ymd' }}</span>{{td.date}}</a>
+            </td>
+            {% for nm in td.workoutname.all %}
+            <td id="myTd" class="text-center"><a href="/{{td.id}}">{{ nm }}</a><a data-toggle="modal"
+                data-target="#d{{td}}ModalCenter" style="float:right;" name="" href="#"><i class="far fa-times-circle"
+                  style="color:grey;"></i></a></td>
+            <div class="modal fade" id='d{{td}}ModalCenter' tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
-                              <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="ModalLTitle">Delete Workout</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body text-wrap">
-                                  Are you sure you want to delete {{td}} {{nm}}?
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <a href="{% url 'delete_workout' td.id  %}" type="button" class="btn btn-danger">Delete</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLTitle">Delete Workout</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body text-wrap">
+                    Are you sure you want to delete {{td}} {{nm}}?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="{% url 'delete_workout' td.id  %}" type="button" class="btn btn-danger">Delete</a>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
-                      {% endfor %}
-                    </tr>
-                {% endfor %}
+            {% endfor %}
+          </tr>
+          {% endfor %}
 
 
-           </tbody>
-        </table>
+        </tbody>
+      </table>
 
 
 
     </div>
   </div>
 
-<br><br>
+  <br><br>
 
 </div>
 
@@ -117,15 +121,15 @@
 
 
 <script type="text/javascript">
-  $(document).ready(function() {
-      $('#example').DataTable( {
-          "order": [[ 0, "desc" ]]
-      } );
-      $('#datepicker').datepicker({
-          uiLibrary: 'bootstrap4'
-      });
+  $(document).ready(function () {
+    $('#example').DataTable({
+      "order": [[0, "desc"]]
+    });
+    $('#datepicker').datepicker({
+      uiLibrary: 'bootstrap4'
+    });
 
-  } );
+  });
 
 
 </script>
@@ -135,114 +139,76 @@
 <link rel="stylesheet" type="text/css" href="{% static 'CSS/home.css' %}">
 <main role="main">
 
-     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-       <ol class="carousel-indicators">
-         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-         <li data-target="#myCarousel" data-slide-to="1"></li>
-         <li data-target="#myCarousel" data-slide-to="2"></li>
-       </ol>
-       <div class="carousel-inner">
-         <div class="carousel-item active">
-           <img class="first-slide" src="https://images.unsplash.com/photo-1521805103424-d8f8430e8933?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80" alt="First slide">
-           <div class="container">
-             <div id="c1" class="carousel-caption text-left">
-               <h1>Example headline.</h1>
-               <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-               <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
-             </div>
-           </div>
-         </div>
-         <div class="carousel-item">
-           <img class="second-slide" src="https://images.unsplash.com/photo-1597076537061-a6b58163aa45?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="Second slide">
-           <div class="container">
-             <div class="carousel-caption">
-               <h1>Another example headline.</h1>
-               <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-               <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
-             </div>
-           </div>
-         </div>
-         <div class="carousel-item">
-           <img class="third-slide" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="Third slide">
-           <div class="container">
-             <div id="c3" class="carousel-caption text-right">
-               <h1>One more for good measure.</h1>
-               <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-               <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
-             </div>
-           </div>
-         </div>
-       </div>
-       <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-         <span class="sr-only">Previous</span>
-       </a>
-       <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-         <span class="sr-only">Next</span>
-       </a>
-     </div>
-
-       <!-- START THE FEATURETTES -->
-
-
-
-       <div class="row featurette">
-         <div class="col-md-7">
-           <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-         </div>
-         <div class="col-md-5">
-           <img class="featurette-image img-fluid mx-auto" src="https://dummyimage.com/500x500/000/63646b&text=item+1" alt="Generic placeholder image">
-         </div>
-       </div>
-
-       <hr class="featurette-divider">
-
-       <div class="row featurette">
-         <div class="col-md-7 order-md-2">
-           <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-         </div>
-         <div class="col-md-5 order-md-1">
-           <img class="featurette-image img-fluid mx-auto" src="https://dummyimage.com/500x500/000/63646b&text=item+2" alt="Generic placeholder image">
-         </div>
-       </div>
-
-       <hr class="featurette-divider">
-
-       <div class="row featurette">
-         <div class="col-md-7">
-           <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-         </div>
-         <div class="col-md-5">
-           <img class="featurette-image img-fluid mx-auto" src="https://dummyimage.com/500x500/000/63646b&text=item+3" alt="Generic placeholder image">
-         </div>
-       </div>
-
-       <hr class="featurette-divider">
-
-       <!-- /END THE FEATURETTES -->
-
-
-     <!-- /.container -->
-
-   <!-- FOOTER -->
-         <footer class="container">
-           <p style = "float: right;"><a href="#">Back to top</a></p>
-         </footer>
-       </main>
-
-       <!-- Bootstrap core JavaScript
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="first-slide"
+          src="https://images.unsplash.com/photo-1521805103424-d8f8430e8933?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=750&q=80"
+          alt="First slide">
+        <div class="container">
+          <div id="c1" class="carousel-caption text-left">
+            <h1>Log Daily Workouts</h1>
+            <p>Easily record workouts and training sessions. Log exercises, weights, sets, and reps in order to track
+              progress in the gym and
+              stay on track with training goals.
+            </p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'login' %}?name=signup" role="button">Sign
+                up today</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="second-slide"
+          src="https://images.unsplash.com/photo-1597076537061-a6b58163aa45?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+          alt="Second slide">
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Customize Exercise Routine</h1>
+            <p>Choose your own custom exercises. Edit previous workouts or enter future workouts custome to your
+              personal training plan.</p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'login' %}?name=signup" role="button">Get Started</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="third-slide"
+          src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
+          alt="Third slide">
+        <div class="container">
+          <div id="c3" class="carousel-caption text-right">
+            <h1>Get Started</h1>
+            <p>Get started today and begin tracking your progress.</p>
+            <p><a class="btn btn-lg btn-primary" href="{% url 'login' %}?name=signup" role="button">Sign Up</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+  <!-- Bootstrap core JavaScript
        ================================================== -->
-       <!-- Placed at the end of the document so the pages load faster -->
-       <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-       <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-       <script src="../../assets/js/vendor/popper.min.js"></script>
-       <script src="../../dist/js/bootstrap.min.js"></script>
-       <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="../../assets/js/vendor/popper.min.js"></script>
+  <script src="../../dist/js/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 
 
-{% endif %}
-{%  endblock %}
+  {% endif %}
+  {% endblock %}

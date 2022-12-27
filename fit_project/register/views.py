@@ -3,11 +3,13 @@ from django.contrib.auth import authenticate, login as auth_login
 from .forms import RegisterForm
 
 # Create your views here.
+
+
 def register(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
-            print("form is valid")
+            #print("form is valid")
             form.save()
 
         return redirect("/")
@@ -15,14 +17,16 @@ def register(response):
     else:
         form = RegisterForm()
 
-    return render(response,"register/register.html",{"form":form})
+    return render(response, "register/register.html", {"form": form})
 
 
-def login(response ):
+def login(response):
     if response.user.is_authenticated:
         return redirect("/")
 
     if response.method == 'GET':
+        for v in response.GET.values():
+            print(v)
 
         if 'signup' in response.GET.values():
             signup = True
@@ -31,7 +35,7 @@ def login(response ):
 
         context = ''
         form = RegisterForm()
-        return render(response, 'registration/login.html', {'context': context, 'form':form, 'signup': signup})
+        return render(response, 'registration/login.html', {'context': context, 'form': form, 'signup': signup})
 
     elif response.method == 'POST':
 
@@ -47,19 +51,20 @@ def login(response ):
                 # Redirect to a success page
 
             else:
-                context = 'Username or password does not match' # to display error
+                context = 'Username or password does not match'  # to display error
                 form = RegisterForm()
-                return render(response, 'registration/login.html', {'context': context,'form':form})
+                return render(response, 'registration/login.html', {'context': context, 'form': form})
         else:
 
             form = RegisterForm(response.POST)
-            err=''
-            signup=False
+            err = ''
+            signup = False
             if form.is_valid():
                 form.save()
                 username = form.cleaned_data["username"]
                 password = form.cleaned_data["password1"]
-                user = authenticate(response, username=username, password=password)
+                user = authenticate(
+                    response, username=username, password=password)
 
                 if user is not None:
                     auth_login(response, user)
@@ -73,4 +78,4 @@ def login(response ):
                         err = 'All fields are required'
                     break
 
-            return render(response, 'registration/login.html', {'err': err, 'form':form, 'signup': signup})
+            return render(response, 'registration/login.html', {'err': err, 'form': form, 'signup': signup})
