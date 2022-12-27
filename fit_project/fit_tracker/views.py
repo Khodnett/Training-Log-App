@@ -10,6 +10,7 @@ import calendar as calend
 from calendar import HTMLCalendar
 from .utils import Calendar
 from datetime import datetime, timedelta
+from django.contrib import messages
 # Create your views here.
 
 
@@ -164,6 +165,7 @@ def contact(response):
             except BadHeaderError:
                 return HttpResponse('Invalid header found.')
 
+            messages.success(response, "Email was sent successfully")
             return HttpResponseRedirect("/")
 
     form = ContactForm()

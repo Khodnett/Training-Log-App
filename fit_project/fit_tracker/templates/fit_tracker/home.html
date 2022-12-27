@@ -4,7 +4,21 @@
 {% load static %}
 {% block content %}
 
+{% if messages %}
+{% for message in messages %}
 
+<div class="alert alert-success" id="msg" role="alert">
+  {{message}}
+</div>
+{% endfor %}
+{% endif %}
+<script>
+  setTimeout(function () {
+    if ($('#msg').length > 0) {
+      $('#msg').remove();
+    }
+  }, 2000)
+</script>
 
 {% if user.is_authenticated %}
 
